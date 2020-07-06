@@ -6,6 +6,7 @@ import Photo from './Photo';
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+        padding: 16
     }
 }));
 
@@ -15,7 +16,7 @@ const PhotoContainer = (props) => {
 
     const photos = props.data.map(photoData => {
         return (
-            <Grid item xs={12} sm={6} md={4} lg={3}>
+            <Grid item xs={12} sm={6}>
                 <Photo data={photoData} />
             </Grid>
         );
@@ -25,9 +26,10 @@ const PhotoContainer = (props) => {
         <Grid
             container
             className={classes.root}
+            spacing={3}
             direction="row"
-            justify="space-evenly"
-            alignContent="stretch">
+            justify="space-around"
+            alignItems="center">
             {photos}
         </Grid>
     );

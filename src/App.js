@@ -10,20 +10,24 @@ function App() {
   const KEY = 'EXJCxiKAXZf_IRdOMnH7Rgv2QzwBmEaTXIWo2ihme7k';
 
   useEffect(() => {
-    axios.get(`https://api.unsplash.com/photos/random?client_id=${KEY}&count=30`)
-    .then(response => {
-      console.log(response.data);
-      setPhotos(response.data);
-    });
+    axios.get(`https://api.unsplash.com/photos/random?client_id=${KEY}&count=30&orientation=landscape`)
+      .then(response => {
+        console.log(response.data);
+        setPhotos(response.data);
+      });
   }, []);
-  
+
   let photoDisplay = <p>Loading...</p>;
 
   if (photos) {
-    photoDisplay =  <PhotoContainer data={photos}/>;
+    photoDisplay = <PhotoContainer data={photos} />;
   }
 
-  return photoDisplay;
+  return (
+    <div className="App">
+      {photoDisplay}
+    </div>
+    );
 }
 
 export default App;
