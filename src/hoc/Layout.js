@@ -1,13 +1,11 @@
 import React from 'react';
 import Aux from './Auxillary';
-import SearchBar from '../components/SearchBar';
-import PhotoContainer from '../components/PhotoContainer';
+import PhotosContainer from '../containers/PhotosContainer';
 
 const Layout = props => {
     return (
         <Aux>
-            <SearchBar/>
-            <PhotoContainer/>
+            <PhotosContainer/>
         </Aux>
     )
 };
