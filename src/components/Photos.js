@@ -10,14 +10,16 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const PhotoContainer = (props) => {
+const Photos = (props) => {
 
     const classes = useStyles();
 
     const photos = props.data.map(photoData => {
         return (
-            <Grid item xs={12} sm={6}>
-                <Photo data={photoData} />
+            <Grid item xs={12} sm={6}
+                key={photoData.id}>
+                <Photo
+                    data={photoData} />
             </Grid>
         );
     });
@@ -35,4 +37,4 @@ const PhotoContainer = (props) => {
     );
 };
 
-export default PhotoContainer;
+export default Photos;
