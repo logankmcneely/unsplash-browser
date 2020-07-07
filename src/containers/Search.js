@@ -7,6 +7,8 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Aux from '../hoc/Auxillary';
 
 import * as actions from '../store/actions';
 
@@ -15,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
         padding: '2px 4px',
         display: 'flex',
         alignItems: 'center',
-        width: 300,
+        width: 'auto',
         position: 'fixed',
         right: 16,
         top: 16,
@@ -41,6 +43,11 @@ const Search = () => {
     // STYLING
     const classes = useStyles();
 
+    // LOCAL STATE
+    const [searchInput, setSearchInput] = useState('');
+    const [searchFocusState, setSearchFocusState] = useState(false);
+    const inputRef = useRef('');
+
     // DISPATCH
     const dispatch = useDispatch();
     const onSetSearchField = useCallback(
@@ -48,48 +55,63 @@ const Search = () => {
         [dispatch]
     );
 
-    // LOCAL STATE
-    const [searchInput, setSearchInput] = useState('');
-
-    const inputRef = useRef('');
+    // Toggles the state of the search bar focus to hide when not in use
+    const clickAwayHandler = () => {setSearchFocusState(!searchFocusState)};
+        
 
     // Waits for 650ms of non-changed input before submitting search
     useEffect(() => {
         console.log(inputRef);
         const timer = setTimeout(() => {
-            if (searchInput === inputRef.current.value) {
+            console.log('[useEffect] searchInput', searchInput);
+            console.log('[useEffect] inputRef', inputRef.current.value);
+            if (inputRef && searchInput === inputRef.current.value) {
                 const newSearchField = searchInput.length === 0
                     ? ''
                     : `${searchInput}`;
                 if (newSearchField !== '') {
                     console.log('[Search.js] newSearchField:', newSearchField);
                     onSetSearchField(newSearchField);
-
+                    setSearchFocusState(false);
                 }
             }
         }, 650);
         return () => {
             clearTimeout(timer);
         };
-    }, [searchInput, inputRef, onSetSearchField]);
+    }, [searchInput, inputRef, onSetSearchField, setSearchFocusState]);
 
     return (
-        <Paper component="form" className={classes.root}>
-            <IconButton className={classes.iconButton} aria-label="menu">
-                <MenuIcon />
-            </IconButton>
-            <Divider className={classes.divider} orientation="vertical" />
-            <InputBase
-                className={classes.input}
-                inputRef={inputRef}
-                value={searchInput}
-                placeholder="Search"
-                onChange={(event) => setSearchInput(event.target.value)}
-            />
-            <IconButton type="submit" className={classes.iconButton} aria-label="search">
-                <SearchIcon />
-            </IconButton>
-        </Paper>
+        <ClickAwayListener onClickAway={clickAwayHandler}>
+            <Paper component="form" className={classes.root}>
+                {searchFocusState ? (
+                    <Aux>
+                        <IconButton
+                            className={classes.iconButton}
+                            aria-label="menu">
+                            <MenuIcon />
+                        </IconButton>
+                        <Divider className={classes.divider} orientation="vertical" />
+                        <InputBase
+                            className={classes.input}
+                            inputRef={inputRef}
+                            value={searchInput}
+                            placeholder="Search"
+                            onChange={(event) => setSearchInput(event.target.value)}
+                        />
+                        <IconButton type="submit" className={classes.iconButton} aria-label="search">
+                            <SearchIcon />
+                        </IconButton>
+                    </Aux>
+                )
+                    : <IconButton
+                        className={classes.iconButton}
+                        aria-label="menu"
+                        onClick={clickAwayHandler}>
+                        <SearchIcon />
+                    </IconButton>}
+            </Paper>
+        </ClickAwayListener>
     );
 };
 

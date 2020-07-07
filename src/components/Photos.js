@@ -29,7 +29,7 @@ const Photos = (props) => {
             container
             className={classes.root}
             direction="column"
-            justify="spacing-between"
+            justify="space-between"
             alignItems="center">
             {photos}
         </Grid>
