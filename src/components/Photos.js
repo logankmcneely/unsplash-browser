@@ -29,7 +29,7 @@ const Photos = (props) => {
             container
             className={classes.root}
             spacing={3}
-            direction="row"
+            direction="column"
             justify="space-around"
             alignItems="center">
             {photos}

@@ -2,9 +2,8 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
+import Aux from '../hoc/Auxillary';
 
 const useStyles = makeStyles({
     root: {
@@ -21,26 +20,21 @@ const useStyles = makeStyles({
 const Photo = (props) => {
 
     const classes = useStyles();
+    const backgroundColor = props.data.color ? props.data.color : 'white';
 
     return (
-        <Card className={classes.root}>
-            <CardActionArea>
-                <CardMedia
-                    component="img"
-                    image={props.data.urls.regular}
-                    title={props.data.alt_description}
-                />
-                {/* <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        {props.data.created_a}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        {props.data.description}
-                    </Typography>
-                </CardContent> */}
-            </CardActionArea>
-
-        </Card>
+        <Aux>
+            <Card className={classes.root}
+                style={{ backgroundColor: backgroundColor }}>
+                <CardActionArea>
+                    <CardMedia
+                        component="img"
+                        image={props.data.urls.regular}
+                        title={props.data.alt_description}
+                    />
+                </CardActionArea>
+            </Card>
+        </Aux>
     );
 };
 

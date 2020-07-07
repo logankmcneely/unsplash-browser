@@ -1,36 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import axios from 'axios';
+import React, {  useEffect, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Aux from '../hoc/Auxillary';
 import Photos from '../components/Photos';
+import * as actions from '../store/actions';
 
 const PhotosContainer = props => {
 
-    // STATE
-    const [photos, setPhotos] = useState();
-
     // SELECTORS
-    const searchField = useSelector(state => {return state.searchField})
+    const photos = useSelector(state => {return state.photos});
+    console.log('[PhotosContainer.js] photos:', photos);
 
-    const KEY = process.env.REACT_APP_API_KEY;
+    // DISPATCH
+    const dispatch = useDispatch();
+    const onFetchRandomPhotos = useCallback(
+        () => dispatch(actions.fetchRandomPhotos())
+    , [dispatch]);
 
     // Initially load selection of random images to populate page
     useEffect(()=> {
-        axios.get(`https://api.unsplash.com/photos/random?client_id=${KEY}&count=30&orientation=landscape`)
-        .then(response => {
-            console.log(response.data);
-            setPhotos(response.data);
-        });
-    }, [KEY]);
-
-    useEffect(()=> {
-        axios.get(`https://api.unsplash.com/photos/random?client_id=${KEY}&count=30&orientation=landscape&query=${searchField}`)
-        .then(response => {
-            console.log(response.data);
-            setPhotos(response.data);
-        });
-    }, [searchField, KEY]);
-
+        onFetchRandomPhotos();
+    }, [onFetchRandomPhotos]);
 
     // Update to spinner later
     const photosDisplay = photos ?

@@ -23,12 +23,13 @@ const Search = () => {
 
     // DISPATCH
     const dispatch = useDispatch();
-    const onSetSearchField = useCallback(
-        (searchField) => dispatch(actions.setSearchField(searchField)),
+    const onFetchSearchedPhotos = useCallback(
+        (searchField) => dispatch(actions.fetchSearchedPhotos(searchField)),
         [dispatch]
     );
 
-    // Local state
+
+    // LOCAL STATE
     const [searchInput, setSearchInput] = useState('');
 
     const inputRef = useRef();
@@ -41,15 +42,16 @@ const Search = () => {
                     ? ''
                     : `${searchInput}`;
                 if (newSearchField !== '') {
-                    console.log('Searching query:', newSearchField);
-                    onSetSearchField(newSearchField);
+                    console.log('[Search.js] newSearchField:', newSearchField);
+                    onFetchSearchedPhotos(newSearchField);
+
                 }
             }
         }, 650);
         return () => {
             clearTimeout(timer);
         };
-    }, [searchInput, inputRef, onSetSearchField]);
+    }, [searchInput, inputRef, onFetchSearchedPhotos]);
 
     return (
         <input
