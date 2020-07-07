@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
+import SearchIcon from '@material-ui/icons/Search';
 import * as actions from '../store/actions';
 
 const useStyles = makeStyles({
@@ -23,11 +24,10 @@ const Search = () => {
 
     // DISPATCH
     const dispatch = useDispatch();
-    const onFetchSearchedPhotos = useCallback(
-        (searchField) => dispatch(actions.fetchSearchedPhotos(searchField)),
+    const onSetSearchField = useCallback(
+        (searchField) => dispatch(actions.setSearchField(searchField)),
         [dispatch]
     );
-
 
     // LOCAL STATE
     const [searchInput, setSearchInput] = useState('');
@@ -43,7 +43,7 @@ const Search = () => {
                     : `${searchInput}`;
                 if (newSearchField !== '') {
                     console.log('[Search.js] newSearchField:', newSearchField);
-                    onFetchSearchedPhotos(newSearchField);
+                    onSetSearchField(newSearchField);
 
                 }
             }
@@ -51,7 +51,7 @@ const Search = () => {
         return () => {
             clearTimeout(timer);
         };
-    }, [searchInput, inputRef, onFetchSearchedPhotos]);
+    }, [searchInput, inputRef, onSetSearchField]);
 
     return (
         <input

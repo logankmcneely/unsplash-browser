@@ -3,14 +3,19 @@ import { updateObject } from '../utils/utility';
 
 const initialState = {
     photos: [],
-    searchField: '',
-    page: 1,
-    totalPages: 1
-
+    searchParams: {
+        searchField: '',
+        page: 1,
+        totalPages: 1,
+        per_page: 30,
+        orientation: "landscape"
+    }
 };
 
 const setSearchField = (state, action) => {
-    return updateObject(state, { searchParams: action.searchParams });
+    const updatedSearchParams = updateObject(state.searchParams, {searchField: action.searchField});
+    const updatedState = updateObject(state, { searchParams: updatedSearchParams});
+    return updatedState;
 };
 
 const fetchRandomPhotosStart = (state, action) => {

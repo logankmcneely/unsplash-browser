@@ -44,13 +44,11 @@ export const fetchRandomPhotos = () => {
     };
 };
 
-export const fetchSearchedPhotos = (searchField) => {
-    // Before initiating search, update saved search value
-    setSearchField(searchField);
-    console.log('[fetchSearchedPhotos] searchParams:', searchField);
+export const fetchSearchedPhotos = (searchParams) => {  
+    console.log('[fetchSearchedPhotos] searchParams:', searchParams);
     return dispatch => {
         dispatch(fetchPhotosStart());
-        axios.get(`https://api.unsplash.com/search/photos?client_id=${process.env.REACT_APP_API_KEY}&per_page=30&query=${searchField}`)
+        axios.get(`https://api.unsplash.com/search/photos?client_id=${process.env.REACT_APP_API_KEY}&per_page=30&query=${searchParams.searchField}`)
         .then(response => {
             console.log('[response]', response.data);
             dispatch(fetchPhotosSuccess(response.data.results));
