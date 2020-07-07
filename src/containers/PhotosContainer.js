@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { AppContext } from '../App';
 import Aux from '../hoc/Auxillary';
 import Photos from '../components/Photos';
 
 const PhotosContainer = props => {
 
-    //State
+    // STATE
     const [photos, setPhotos] = useState();
 
-    // Context API state
-    const { state, dispatch } = useContext(AppContext);
+    // SELECTORS
+    const searchField = useSelector(state => {return state.searchField})
 
     const KEY = process.env.REACT_APP_API_KEY;
 
@@ -21,15 +21,15 @@ const PhotosContainer = props => {
             console.log(response.data);
             setPhotos(response.data);
         });
-    }, []);
+    }, [KEY]);
 
     useEffect(()=> {
-        axios.get(`https://api.unsplash.com/photos/random?client_id=${KEY}&count=30&orientation=landscape&query=${state.searchQuery}`)
+        axios.get(`https://api.unsplash.com/photos/random?client_id=${KEY}&count=30&orientation=landscape&query=${searchField}`)
         .then(response => {
             console.log(response.data);
             setPhotos(response.data);
         });
-    }, [state.searchQuery]);
+    }, [searchField, KEY]);
 
 
     // Update to spinner later
