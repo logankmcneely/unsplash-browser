@@ -8,7 +8,9 @@ import Aux from '../hoc/Auxillary';
 const useStyles = makeStyles({
     root: {
         height: "auto",
-        padding: 8
+        padding: 16,
+        marginTop: 16,
+        marginBottom: 16
     },
     media: {
         width: "95%",
