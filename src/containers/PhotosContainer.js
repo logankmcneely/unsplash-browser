@@ -12,8 +12,7 @@ const PhotosContainer = props => {
     // Context API state
     const { state, dispatch } = useContext(AppContext);
 
-    // API Key. Figure out how best to hide this
-    const KEY = 'Ju8wqatqIbiBad86kTRQ5ISJOhuI7epXpPmA4qNXOLc';
+    const KEY = process.env.REACT_APP_API_KEY;
 
     // Initially load selection of random images to populate page
     useEffect(()=> {
