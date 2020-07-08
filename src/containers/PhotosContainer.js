@@ -8,9 +8,9 @@ const PhotosContainer = props => {
 
     // SELECTORS
     const photos = useSelector(state => { return state.photos });
-    console.log('[PhotosContainer.js] photos:', photos);
+    // console.log('[PhotosContainer.js] photos:', photos);
     const searchParams = useSelector(state => { return state.searchParams });
-    console.log('[PhotosContainer.js] searchParams:', searchParams);
+    // console.log('[PhotosContainer.js] searchParams:', searchParams);
 
     // DISPATCH
     const dispatch = useDispatch();
@@ -32,6 +32,14 @@ const PhotosContainer = props => {
             onFetchSearchedPhotos(searchParams);
         }
     }, [onFetchSearchedPhotos, searchParams]);
+
+    useEffect(() => {
+        if (searchParams.page === 1){
+            setTimeout(()=> {
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            }, 500);
+        }
+    }, [searchParams]);
 
     // Update to spinner later
     const photosDisplay = photos ?

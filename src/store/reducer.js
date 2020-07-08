@@ -10,6 +10,11 @@ const initialState = {
         totalPages: 1,
         per_page: 30,
         orientation: "landscape"
+    },
+    status: {
+        loading: false,
+        error: false,
+        errorMessage: ''
     }
 };
 
@@ -20,25 +25,46 @@ const setSearchField = (state, action) => {
     return updatedState;
 };
 
-const fetchRandomPhotosStart = (state, action) => {
-    return state;
+const fetchPhotosStart = (state, action) => {
+    const updatedStatus = updateObject(state.status, {
+        loading: true,
+        error: false,
+        errorMessage: ''
+    });
+    const updatedState = updateObject(state, { status: updatedStatus});
+    return updatedState;
 };
 
-const fetchRandomPhotosSuccess = (state, action) => {
-    return updateObject(state, { photos: action.photos });
+const fetchPhotosSuccess = (state, action) => {
+    const updatedStatus = updateObject(state.status, {
+        loading: false,
+        error: false,
+        errorMessage: ''
+    });
+    const updatedState = updateObject(state, {
+         photos: action.photos,
+         status: updatedStatus 
+    });
+    return updatedState;
 };
 
-const fetchRandomPhotosFailed = (state, action) => {
-    return state;
+const fetchPhotosFailed = (state, action) => {
+    const updatedStatus = updateObject(state.status, {
+        loading: false,
+        error: true,
+        errorMessage: action.errorMessage
+    });
+    const updatedState = updateObject(state, { status: updatedStatus});
+    return updatedState;
 };
 
 // Reducer
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.SET_SEARCH_FIELD: return setSearchField(state, action);
-        case actionTypes.FETCH_RANDOM_PHOTOS_START: return fetchRandomPhotosStart(state, action);
-        case actionTypes.FETCH_RANDOM_PHOTOS_SUCCESS: return fetchRandomPhotosSuccess(state, action);
-        case actionTypes.FETCH_RANDOM_PHOTOS_FAILED: return fetchRandomPhotosFailed(state, action);
+        case actionTypes.FETCH_PHOTOS_START: return fetchPhotosStart(state, action);
+        case actionTypes.FETCH_PHOTOS_SUCCESS: return fetchPhotosSuccess(state, action);
+        case actionTypes.FETCH_PHOTOS_FAILED: return fetchPhotosFailed(state, action);
         default: return state;
     };
 };

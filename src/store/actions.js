@@ -11,21 +11,21 @@ export const setSearchField = (newSearchField) => {
 
 export const fetchPhotosStart = () => {
     return {
-        type: actionTypes.FETCH_RANDOM_PHOTOS_START
+        type: actionTypes.FETCH_PHOTOS_START
     };
 };
 
 export const fetchPhotosSuccess = (photos) => {
     return {
-        type: actionTypes.FETCH_RANDOM_PHOTOS_SUCCESS,
+        type: actionTypes.FETCH_PHOTOS_SUCCESS,
         photos: photos
     };
 };
 
-export const fetchPhotosFailed = (error) => {
+export const fetchPhotosFailed = (errorMessage) => {
     return {
-        type: actionTypes.FETCH_RANDOM_PHOTOS_FAILED,
-        error: error
+        type: actionTypes.FETCH_PHOTOS_FAILED,
+        errorMessage: errorMessage
     };
 };
 
@@ -34,28 +34,28 @@ export const fetchRandomPhotos = () => {
         dispatch(fetchPhotosStart());
         axios.get(`https://api.unsplash.com/photos/random?client_id=${process.env.REACT_APP_API_KEY}&count=30&orientation=landscape`)
         .then(response => {
-            console.log('[response]', response.data);
+            console.log('[fetchRandomPhotos]', response.data);
             dispatch(fetchPhotosSuccess(response.data));
         })
         .catch(error => {
-            console.log('[.get error]', error);
-            dispatch(fetchPhotosFailed(error));
+            // console.log('[.get error]', error.message);
+            dispatch(fetchPhotosFailed(error.message));
         });
     };
 };
 
 export const fetchSearchedPhotos = (searchParams) => {  
-    console.log('[fetchSearchedPhotos] searchParams:', searchParams);
+    // console.log('[fetchSearchedPhotos] searchParams:', searchParams);
     return dispatch => {
         dispatch(fetchPhotosStart());
         axios.get(`https://api.unsplash.com/search/photos?client_id=${process.env.REACT_APP_API_KEY}&per_page=30&query=${searchParams.searchField}`)
         .then(response => {
-            console.log('[response]', response.data);
+            console.log('[fetchSearchedPhotos]', response.data);
             dispatch(fetchPhotosSuccess(response.data.results));
         })
         .catch(error => {
-            console.log('[.get error]', error);
-            dispatch(fetchPhotosFailed(error));
+            // console.log('[.get error]', error);
+            dispatch(fetchPhotosFailed(error.message));
         });
     };
 };
