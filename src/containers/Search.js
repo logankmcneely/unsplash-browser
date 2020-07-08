@@ -8,6 +8,7 @@ import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import CloseIcon from '@material-ui/icons/Close';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -114,8 +115,9 @@ const Search = () => {
                             type="submit"
                             className={classes.iconButton}
                             aria-label="search"
+                            onClick={clickAwayHandler}
                         >
-                            <SearchIcon />
+                            <CloseIcon />
                         </IconButton>
                     </Aux>
                 )
