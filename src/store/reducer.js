@@ -10,6 +10,10 @@ const initialState = {
         totalPages: 1,
         per_page: 30,
         orientation: "landscape"
+    },
+    status: {
+        loading: false,
+        error: null
     }
 };
 
@@ -36,9 +40,9 @@ const fetchRandomPhotosFailed = (state, action) => {
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.SET_SEARCH_FIELD: return setSearchField(state, action);
-        case actionTypes.FETCH_RANDOM_PHOTOS_START: return fetchRandomPhotosStart(state, action);
-        case actionTypes.FETCH_RANDOM_PHOTOS_SUCCESS: return fetchRandomPhotosSuccess(state, action);
-        case actionTypes.FETCH_RANDOM_PHOTOS_FAILED: return fetchRandomPhotosFailed(state, action);
+        case actionTypes.FETCH_PHOTOS_START: return fetchRandomPhotosStart(state, action);
+        case actionTypes.FETCH_PHOTOS_SUCCESS: return fetchRandomPhotosSuccess(state, action);
+        case actionTypes.FETCH_PHOTOS_FAILED: return fetchRandomPhotosFailed(state, action);
         default: return state;
     };
 };

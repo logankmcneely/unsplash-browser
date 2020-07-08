@@ -11,20 +11,20 @@ export const setSearchField = (newSearchField) => {
 
 export const fetchPhotosStart = () => {
     return {
-        type: actionTypes.FETCH_RANDOM_PHOTOS_START
+        type: actionTypes.FETCH_PHOTOS_START
     };
 };
 
 export const fetchPhotosSuccess = (photos) => {
     return {
-        type: actionTypes.FETCH_RANDOM_PHOTOS_SUCCESS,
+        type: actionTypes.FETCH_PHOTOS_SUCCESS,
         photos: photos
     };
 };
 
 export const fetchPhotosFailed = (error) => {
     return {
-        type: actionTypes.FETCH_RANDOM_PHOTOS_FAILED,
+        type: actionTypes.FETCH_PHOTOS_FAILED,
         error: error
     };
 };
