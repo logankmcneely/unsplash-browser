@@ -33,6 +33,7 @@ const PhotosContainer = props => {
         }
     }, [onFetchSearchedPhotos, searchParams]);
 
+    // Scroll to top on new search
     useEffect(() => {
         if (searchParams.page === 1){
             setTimeout(()=> {
