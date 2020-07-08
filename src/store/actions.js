@@ -22,10 +22,10 @@ export const fetchPhotosSuccess = (photos) => {
     };
 };
 
-export const fetchPhotosFailed = (error) => {
+export const fetchPhotosFailed = (errorMessage) => {
     return {
         type: actionTypes.FETCH_PHOTOS_FAILED,
-        error: error
+        errorMessage: errorMessage
     };
 };
 
@@ -38,8 +38,8 @@ export const fetchRandomPhotos = () => {
             dispatch(fetchPhotosSuccess(response.data));
         })
         .catch(error => {
-            console.log('[.get error]', error);
-            dispatch(fetchPhotosFailed(error));
+            // console.log('[.get error]', error.message);
+            dispatch(fetchPhotosFailed(error.message));
         });
     };
 };
@@ -54,8 +54,8 @@ export const fetchSearchedPhotos = (searchParams) => {
             dispatch(fetchPhotosSuccess(response.data.results));
         })
         .catch(error => {
-            console.log('[.get error]', error);
-            dispatch(fetchPhotosFailed(error));
+            // console.log('[.get error]', error);
+            dispatch(fetchPhotosFailed(error.message));
         });
     };
 };

@@ -59,8 +59,6 @@ const Search = () => {
     // field (which triggers a new search)
     useEffect(() => {
         const timer = setTimeout(() => {
-            console.log('[useEffect] searchInput', searchInput);
-            console.log('[useEffect] inputRef', inputRef.current.value);
             if (searchInput === inputRef.current.value) {
                 const newSearchField = searchInput.length === 0
                     ? ''

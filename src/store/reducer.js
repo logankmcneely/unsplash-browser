@@ -45,12 +45,18 @@ const fetchPhotosSuccess = (state, action) => {
          photos: action.photos,
          status: updatedStatus 
     });
-    console.log('[fetchPhotosSuccess], updatedState:', updatedState);
     return updatedState;
 };
 
 const fetchPhotosFailed = (state, action) => {
-    return state;
+    const updatedStatus = updateObject(state.status, {
+        loading: false,
+        error: true,
+        errorMessage: action.errorMessage
+    });
+    const updatedState = updateObject(state, { status: updatedStatus});
+    console.log('[fetchPhotosFailed], updatedState:', updatedState);
+    return updatedState;
 };
 
 // Reducer
