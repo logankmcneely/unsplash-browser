@@ -16,7 +16,7 @@ const Photos = (props) => {
 
     const photos = props.data.map(photoData => {
         return (
-            <Grid item xs={12} sm={6}
+            <Grid item
                 key={photoData.id}>
                 <Photo
                     data={photoData} />
@@ -28,9 +28,8 @@ const Photos = (props) => {
         <Grid
             container
             className={classes.root}
-            spacing={3}
             direction="column"
-            justify="space-around"
+            justify="space-between"
             alignItems="center">
             {photos}
         </Grid>
