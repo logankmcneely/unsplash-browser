@@ -7,19 +7,14 @@ import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Popper from '@material-ui/core/Popper';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Fade from '@material-ui/core/Fade';
-import Grow from '@material-ui/core/Grow';
-import MenuList from '@material-ui/core/MenuList';
+
 
 import Aux from '../hoc/Auxillary';
 import * as actions from '../store/actions';
+import Menu from './Menu';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -56,11 +51,8 @@ const Search = () => {
     // LOCAL STATE
     const [searchInput, setSearchInput] = useState('');
     const [searchFocusState, setSearchFocusState] = useState(false);
-    const [menuOpen, setMenuOpen] = useState(false);
-
+    
     const inputRef = useRef('');
-    const anchorRef = useRef(null);
-
 
     // DISPATCH
     const dispatch = useDispatch();
@@ -100,59 +92,12 @@ const Search = () => {
         e.target.select();
     }
 
-    const closeMenuHandler = (e) => {
-        if (anchorRef.current && anchorRef.current.contains(e.target)) {
-            return;
-        }
-        setMenuOpen(false);
-    };
-
-    const menuClickHandler = (e) => {
-        setMenuOpen((prevOpen) => !prevOpen);
-    }
-
-    const prevOpen = React.useRef(menuOpen);
-    React.useEffect(() => {
-        if (prevOpen.current === true && menuOpen === false) {
-            anchorRef.current.focus();
-        }
-
-        prevOpen.current = menuOpen;
-    }, [menuOpen]);
-
     return (
         <ClickAwayListener mouseEvent="onMouseDown" onClickAway={clickAwayHandler}>
             <Paper className={classes.root}>
                 {searchFocusState ? (
                     <Aux>
-                        <IconButton
-                            className={classes.iconButton}
-                            aria-controls={menuOpen ? 'menu-list-grow' : undefined}
-                            aria-haspopup="true"
-                            variant="contained"
-                            ref={anchorRef}
-                            onClick={menuClickHandler}>
-                            <MenuIcon />
-                        </IconButton>
-                        <Popper open={menuOpen} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-                            {({ TransitionProps, placement }) => (
-                                <Grow
-                                    {...TransitionProps}
-                                    style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-                                >
-                                    <Paper>
-                                        <ClickAwayListener onClickAway={closeMenuHandler}>
-                                            <MenuList autoFocusItem={menuOpen} id="menu-list-grow">
-                                                <MenuItem onClick={closeMenuHandler}>Profile</MenuItem>
-                                                <MenuItem onClick={closeMenuHandler}>My account</MenuItem>
-                                                <MenuItem onClick={closeMenuHandler}>Logout</MenuItem>
-                                            </MenuList>
-                                        </ClickAwayListener>
-                                    </Paper>
-                                </Grow>
-                            )}
-                        </Popper>
-
+                        <Menu/>
                         <Divider
                             className={classes.divider}
                             orientation="vertical" />
