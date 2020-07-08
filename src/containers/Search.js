@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
+
+// Material-UI
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
@@ -8,8 +10,8 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Aux from '../hoc/Auxillary';
 
+import Aux from '../hoc/Auxillary';
 import * as actions from '../store/actions';
 
 const useStyles = makeStyles((theme) => ({
@@ -37,10 +39,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
 const Search = () => {
 
-    // STYLING
     const classes = useStyles();
 
     // LOCAL STATE
@@ -55,17 +55,13 @@ const Search = () => {
         [dispatch]
     );
 
-    // Toggles the state of the search bar focus to hide when not in use
-    const clickAwayHandler = () => {setSearchFocusState(!searchFocusState)};
-        
-
-    // Waits for 650ms of non-changed input before submitting search
+    // Waits for 850ms of non-changed input before updating the search
+    // field (which triggers a new search)
     useEffect(() => {
-        console.log(inputRef);
         const timer = setTimeout(() => {
             console.log('[useEffect] searchInput', searchInput);
             console.log('[useEffect] inputRef', inputRef.current.value);
-            if (inputRef && searchInput === inputRef.current.value) {
+            if (searchInput === inputRef.current.value) {
                 const newSearchField = searchInput.length === 0
                     ? ''
                     : `${searchInput}`;
@@ -75,15 +71,22 @@ const Search = () => {
                     setSearchFocusState(false);
                 }
             }
-        }, 650);
+        }, 850);
         return () => {
             clearTimeout(timer);
         };
     }, [searchInput, inputRef, onSetSearchField, setSearchFocusState]);
 
+    // Toggles the state of the search bar focus to hide when not in use
+    const clickAwayHandler = () => { setSearchFocusState(!searchFocusState) };
+
+    // const submitHandler = () => {
+    //     onSetSearchField(inputRef.current.value);
+    // };
+
     return (
-        <ClickAwayListener onClickAway={clickAwayHandler}>
-            <Paper component="form" className={classes.root}>
+        <ClickAwayListener mouseEvent="onMouseDown" onClickAway={clickAwayHandler}>
+            <Paper className={classes.root}>
                 {searchFocusState ? (
                     <Aux>
                         <IconButton
@@ -97,9 +100,14 @@ const Search = () => {
                             inputRef={inputRef}
                             value={searchInput}
                             placeholder="Search"
-                            onChange={(event) => setSearchInput(event.target.value)}
+                            onChange={(e) => setSearchInput(e.target.value)}
+                            
                         />
-                        <IconButton type="submit" className={classes.iconButton} aria-label="search">
+                        <IconButton
+                            type="submit"
+                            className={classes.iconButton}
+                            aria-label="search"
+                        >
                             <SearchIcon />
                         </IconButton>
                     </Aux>

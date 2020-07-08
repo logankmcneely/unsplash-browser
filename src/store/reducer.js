@@ -1,6 +1,7 @@
 import * as actionTypes from './actionTypes';
 import { updateObject } from '../utils/utility';
 
+// State
 const initialState = {
     photos: [],
     searchParams: {
@@ -12,6 +13,7 @@ const initialState = {
     }
 };
 
+// Helper functions to keep the reducer clean
 const setSearchField = (state, action) => {
     const updatedSearchParams = updateObject(state.searchParams, {searchField: action.searchField});
     const updatedState = updateObject(state, { searchParams: updatedSearchParams});
@@ -30,6 +32,7 @@ const fetchRandomPhotosFailed = (state, action) => {
     return state;
 };
 
+// Reducer
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.SET_SEARCH_FIELD: return setSearchField(state, action);
