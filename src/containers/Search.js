@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 // Material-UI
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Aux from '../hoc/Auxillary';
 import * as actions from '../store/actions';
@@ -37,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
         height: 28,
         margin: 4,
     },
+    spinner: {
+        margin: 8
+    }
 }));
 
 const Search = () => {
@@ -55,6 +59,9 @@ const Search = () => {
         [dispatch]
     );
 
+    // SELECTORS
+    const loading = useSelector(state => { return state.status.loading });
+
     // Waits for 850ms of non-changed input before updating the search
     // field (which triggers a new search)
     useEffect(() => {
@@ -64,7 +71,7 @@ const Search = () => {
                     ? ''
                     : `${searchInput}`;
                 if (newSearchField !== '') {
-                    console.log('[Search.js] newSearchField:', newSearchField);
+                    // console.log('[Search.js] newSearchField:', newSearchField);
                     onSetSearchField(newSearchField);
                     setSearchFocusState(false);
                 }
@@ -78,9 +85,10 @@ const Search = () => {
     // Toggles the state of the search bar focus to hide when not in use
     const clickAwayHandler = () => { setSearchFocusState(!searchFocusState) };
 
-    // const submitHandler = () => {
-    //     onSetSearchField(inputRef.current.value);
-    // };
+    // Highlights all text on focus of the search field
+    const focusHandler = (e) => {
+        e.target.select();
+    }
 
     return (
         <ClickAwayListener mouseEvent="onMouseDown" onClickAway={clickAwayHandler}>
@@ -92,14 +100,17 @@ const Search = () => {
                             aria-label="menu">
                             <MenuIcon />
                         </IconButton>
-                        <Divider className={classes.divider} orientation="vertical" />
+                        <Divider
+                            className={classes.divider}
+                            orientation="vertical" />
                         <InputBase
                             className={classes.input}
                             inputRef={inputRef}
                             value={searchInput}
                             placeholder="Search"
                             onChange={(e) => setSearchInput(e.target.value)}
-                            
+                            onFocus={focusHandler}
+
                         />
                         <IconButton
                             type="submit"
@@ -110,12 +121,17 @@ const Search = () => {
                         </IconButton>
                     </Aux>
                 )
-                    : <IconButton
-                        className={classes.iconButton}
-                        aria-label="menu"
-                        onClick={clickAwayHandler}>
-                        <SearchIcon />
-                    </IconButton>}
+                    : loading ?
+                        <CircularProgress
+                            className={classes.spinner}
+                            size={28} />
+                        : <IconButton
+                            className={classes.iconButton}
+                            aria-label="menu"
+                            onClick={clickAwayHandler}>
+                            <SearchIcon />
+                        </IconButton>
+                }
             </Paper>
         </ClickAwayListener>
     );

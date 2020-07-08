@@ -34,7 +34,7 @@ export const fetchRandomPhotos = () => {
         dispatch(fetchPhotosStart());
         axios.get(`https://api.unsplash.com/photos/random?client_id=${process.env.REACT_APP_API_KEY}&count=30&orientation=landscape`)
         .then(response => {
-            // console.log('[response]', response.data);
+            console.log('[fetchRandomPhotos]', response.data);
             dispatch(fetchPhotosSuccess(response.data));
         })
         .catch(error => {
@@ -45,12 +45,12 @@ export const fetchRandomPhotos = () => {
 };
 
 export const fetchSearchedPhotos = (searchParams) => {  
-    console.log('[fetchSearchedPhotos] searchParams:', searchParams);
+    // console.log('[fetchSearchedPhotos] searchParams:', searchParams);
     return dispatch => {
         dispatch(fetchPhotosStart());
         axios.get(`https://api.unsplash.com/search/photos?client_id=${process.env.REACT_APP_API_KEY}&per_page=30&query=${searchParams.searchField}`)
         .then(response => {
-            // console.log('[response]', response.data);
+            console.log('[fetchSearchedPhotos]', response.data);
             dispatch(fetchPhotosSuccess(response.data.results));
         })
         .catch(error => {

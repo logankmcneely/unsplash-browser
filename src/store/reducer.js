@@ -55,7 +55,6 @@ const fetchPhotosFailed = (state, action) => {
         errorMessage: action.errorMessage
     });
     const updatedState = updateObject(state, { status: updatedStatus});
-    console.log('[fetchPhotosFailed], updatedState:', updatedState);
     return updatedState;
 };
 
