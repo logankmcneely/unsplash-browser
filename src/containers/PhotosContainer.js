@@ -8,9 +8,9 @@ const PhotosContainer = props => {
 
     // SELECTORS
     const photos = useSelector(state => { return state.photos });
-    console.log('[PhotosContainer.js] photos:', photos);
+    // console.log('[PhotosContainer.js] photos:', photos);
     const searchParams = useSelector(state => { return state.searchParams });
-    console.log('[PhotosContainer.js] searchParams:', searchParams);
+    // console.log('[PhotosContainer.js] searchParams:', searchParams);
 
     // DISPATCH
     const dispatch = useDispatch();

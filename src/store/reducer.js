@@ -13,7 +13,8 @@ const initialState = {
     },
     status: {
         loading: false,
-        error: null
+        error: false,
+        errorMessage: ''
     }
 };
 
@@ -24,15 +25,31 @@ const setSearchField = (state, action) => {
     return updatedState;
 };
 
-const fetchRandomPhotosStart = (state, action) => {
-    return state;
+const fetchPhotosStart = (state, action) => {
+    const updatedStatus = updateObject(state.status, {
+        loading: true,
+        error: false,
+        errorMessage: ''
+    });
+    const updatedState = updateObject(state, { status: updatedStatus});
+    return updatedState;
 };
 
-const fetchRandomPhotosSuccess = (state, action) => {
-    return updateObject(state, { photos: action.photos });
+const fetchPhotosSuccess = (state, action) => {
+    const updatedStatus = updateObject(state.status, {
+        loading: false,
+        error: false,
+        errorMessage: ''
+    });
+    const updatedState = updateObject(state, {
+         photos: action.photos,
+         status: updatedStatus 
+    });
+    console.log('[fetchPhotosSuccess], updatedState:', updatedState);
+    return updatedState;
 };
 
-const fetchRandomPhotosFailed = (state, action) => {
+const fetchPhotosFailed = (state, action) => {
     return state;
 };
 
@@ -40,9 +57,9 @@ const fetchRandomPhotosFailed = (state, action) => {
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.SET_SEARCH_FIELD: return setSearchField(state, action);
-        case actionTypes.FETCH_PHOTOS_START: return fetchRandomPhotosStart(state, action);
-        case actionTypes.FETCH_PHOTOS_SUCCESS: return fetchRandomPhotosSuccess(state, action);
-        case actionTypes.FETCH_PHOTOS_FAILED: return fetchRandomPhotosFailed(state, action);
+        case actionTypes.FETCH_PHOTOS_START: return fetchPhotosStart(state, action);
+        case actionTypes.FETCH_PHOTOS_SUCCESS: return fetchPhotosSuccess(state, action);
+        case actionTypes.FETCH_PHOTOS_FAILED: return fetchPhotosFailed(state, action);
         default: return state;
     };
 };
