@@ -33,6 +33,14 @@ const PhotosContainer = props => {
         }
     }, [onFetchSearchedPhotos, searchParams]);
 
+    useEffect(() => {
+        if (searchParams.page === 1){
+            setTimeout(()=> {
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            }, 500);
+        }
+    }, [searchParams]);
+
     // Update to spinner later
     const photosDisplay = photos ?
         <Photos
