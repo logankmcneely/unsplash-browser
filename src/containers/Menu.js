@@ -18,9 +18,6 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
     iconButton: {
         padding: 10,
-    },
-    popper: {
-        marginRight: 10
     }
 }));
 

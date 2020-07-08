@@ -7,14 +7,14 @@ import Aux from '../hoc/Auxillary';
 
 const useStyles = makeStyles({
     root: {
-        height: "auto",
         padding: 16,
         marginTop: 16,
-        marginBottom: 16
+        marginBottom: 16,
+
     },
     media: {
-        width: "95%",
-        objectFit: "none",
+        maxHeight: "90vh",
+        objectFit: "cover",
         objectPosition: "center"
     },
 });
@@ -30,6 +30,7 @@ const Photo = (props) => {
                 style={{ backgroundColor: backgroundColor }}>
                 <CardActionArea>
                     <CardMedia
+                        className={classes.media}
                         component="img"
                         image={props.data.urls.regular}
                         title={props.data.alt_description}

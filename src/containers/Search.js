@@ -93,8 +93,11 @@ const Search = () => {
         }
     }, [loading, setSearchFocusState]);
 
-    // Toggles the state of the search bar focus to hide when not in use
-    const clickAwayHandler = () => { setSearchFocusState(!searchFocusState) };
+    // Hides search menu
+    const hideSearchMenuHandler = () => { setSearchFocusState(false) };
+
+    // Show search menu
+    const showSearchMenuHandler = () => { setSearchFocusState(true) };
 
     // Highlights all text on focus of the search field
     const focusHandler = (e) => {
@@ -102,7 +105,7 @@ const Search = () => {
     }
 
     return (
-        <ClickAwayListener mouseEvent="onMouseDown" onClickAway={clickAwayHandler}>
+        <ClickAwayListener mouseEvent="onMouseDown" onClickAway={hideSearchMenuHandler}>
             <Paper className={classes.root}>
                 {searchFocusState ? (
                     <Aux>
@@ -123,7 +126,7 @@ const Search = () => {
                             type="submit"
                             className={classes.iconButton}
                             aria-label="search"
-                            onClick={clickAwayHandler}
+                            onClick={hideSearchMenuHandler}
                         >
                             <CloseIcon />
                         </IconButton>
@@ -136,7 +139,7 @@ const Search = () => {
                         : <IconButton
                             className={classes.iconButton}
                             aria-label="menu"
-                            onClick={clickAwayHandler}>
+                            onClick={showSearchMenuHandler}>
                             <SearchIcon />
                         </IconButton>
                 }
