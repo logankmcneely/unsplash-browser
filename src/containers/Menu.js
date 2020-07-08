@@ -89,7 +89,7 @@ const Menu = (props) => {
                 {({ TransitionProps, placement }) => (
                     <Grow
                         {...TransitionProps}
-                        style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                        style={{ transformOrigin: placement === 'bottom-end' ? 'center top' : 'center bottom' }}
                     >
                         <Paper>
                             <ClickAwayListener onClickAway={closeMenuHandler}>
