@@ -57,8 +57,8 @@ const Search = () => {
 
     // DISPATCH
     const dispatch = useDispatch();
-    const onSetSearchField = useCallback(
-        (searchField) => dispatch(actions.setSearchField(searchField)),
+    const onSetSearchParams = useCallback(
+        (searchParams) => dispatch(actions.setSearchParams(searchParams)),
         [dispatch]
     );
 
@@ -75,7 +75,9 @@ const Search = () => {
                     : `${searchInput}`;
                 if (newSearchField !== '') {
                     // console.log('[Search.js] newSearchField:', newSearchField);
-                    onSetSearchField(newSearchField);
+                    onSetSearchParams({
+                        searchField: newSearchField,
+                        searchType: 'search'});
                     setSearchFocusState(false);
                 }
             }
@@ -83,7 +85,13 @@ const Search = () => {
         return () => {
             clearTimeout(timer);
         };
-    }, [searchInput, inputRef, onSetSearchField, setSearchFocusState]);
+    }, [searchInput, inputRef, onSetSearchParams, setSearchFocusState]);
+
+    useEffect(()=> {
+        if (loading) {
+            setSearchFocusState(false);
+        }
+    }, [loading, setSearchFocusState]);
 
     // Toggles the state of the search bar focus to hide when not in use
     const clickAwayHandler = () => { setSearchFocusState(!searchFocusState) };
