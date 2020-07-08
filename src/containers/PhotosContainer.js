@@ -20,23 +20,34 @@ const PhotosContainer = props => {
     const onFetchSearchedPhotos = useCallback(
         (searchParams) => dispatch(actions.fetchSearchedPhotos(searchParams))
         , [dispatch]);
-
-    // Initially load selection of random images to populate page
-    useEffect(() => {
-        onFetchRandomPhotos();
-    }, [onFetchRandomPhotos]);
+    const onFetchSortedPhotos = useCallback(
+        (searchParams) => dispatch(actions.fetchSortedPhotos(searchParams))
+        , [dispatch]);
 
     useEffect(() => {
-        // Check if search isn't empty
-        if (searchParams.searchField) {
-            onFetchSearchedPhotos(searchParams);
+        switch (searchParams.searchType) {
+            case 'random': {
+                onFetchRandomPhotos();
+                break;
+            }
+            case 'sorted':  {
+                onFetchSortedPhotos(searchParams);
+                break;
+            }
+            case 'search': {
+                onFetchSearchedPhotos(searchParams);
+                break;
+            }
+            default:
+                break;
         }
-    }, [onFetchSearchedPhotos, searchParams]);
+    }, [onFetchRandomPhotos, onFetchSortedPhotos, onFetchSearchedPhotos, searchParams]);
 
+    // Scroll to top on new search
     useEffect(() => {
-        if (searchParams.page === 1){
-            setTimeout(()=> {
-                window.scrollTo({top: 0, behavior: 'smooth'});
+        if (searchParams.page === 1) {
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }, 500);
         }
     }, [searchParams]);

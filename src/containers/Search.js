@@ -7,13 +7,15 @@ import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import CloseIcon from '@material-ui/icons/Close';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+
 import Aux from '../hoc/Auxillary';
 import * as actions from '../store/actions';
+import Menu from './Menu';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -50,12 +52,13 @@ const Search = () => {
     // LOCAL STATE
     const [searchInput, setSearchInput] = useState('');
     const [searchFocusState, setSearchFocusState] = useState(false);
+    
     const inputRef = useRef('');
 
     // DISPATCH
     const dispatch = useDispatch();
-    const onSetSearchField = useCallback(
-        (searchField) => dispatch(actions.setSearchField(searchField)),
+    const onSetSearchParams = useCallback(
+        (searchParams) => dispatch(actions.setSearchParams(searchParams)),
         [dispatch]
     );
 
@@ -72,7 +75,9 @@ const Search = () => {
                     : `${searchInput}`;
                 if (newSearchField !== '') {
                     // console.log('[Search.js] newSearchField:', newSearchField);
-                    onSetSearchField(newSearchField);
+                    onSetSearchParams({
+                        searchField: newSearchField,
+                        searchType: 'search'});
                     setSearchFocusState(false);
                 }
             }
@@ -80,7 +85,13 @@ const Search = () => {
         return () => {
             clearTimeout(timer);
         };
-    }, [searchInput, inputRef, onSetSearchField, setSearchFocusState]);
+    }, [searchInput, inputRef, onSetSearchParams, setSearchFocusState]);
+
+    useEffect(()=> {
+        if (loading) {
+            setSearchFocusState(false);
+        }
+    }, [loading, setSearchFocusState]);
 
     // Toggles the state of the search bar focus to hide when not in use
     const clickAwayHandler = () => { setSearchFocusState(!searchFocusState) };
@@ -95,11 +106,7 @@ const Search = () => {
             <Paper className={classes.root}>
                 {searchFocusState ? (
                     <Aux>
-                        <IconButton
-                            className={classes.iconButton}
-                            aria-label="menu">
-                            <MenuIcon />
-                        </IconButton>
+                        <Menu/>
                         <Divider
                             className={classes.divider}
                             orientation="vertical" />
@@ -116,8 +123,9 @@ const Search = () => {
                             type="submit"
                             className={classes.iconButton}
                             aria-label="search"
+                            onClick={clickAwayHandler}
                         >
-                            <SearchIcon />
+                            <CloseIcon />
                         </IconButton>
                     </Aux>
                 )

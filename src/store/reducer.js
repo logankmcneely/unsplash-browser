@@ -5,11 +5,13 @@ import { updateObject } from '../utils/utility';
 const initialState = {
     photos: [],
     searchParams: {
+        searchType: 'random',
         searchField: '',
         page: 1,
         totalPages: 1,
-        per_page: 30,
-        orientation: "landscape"
+        orderBy: 'newest',
+        perPage: 30,
+        orientation: 'landscape'
     },
     status: {
         loading: false,
@@ -19,9 +21,12 @@ const initialState = {
 };
 
 // Helper functions to keep the reducer clean
-const setSearchField = (state, action) => {
-    const updatedSearchParams = updateObject(state.searchParams, {searchField: action.searchField});
+const setSearchParams = (state, action) => {
+    console.log('[setSearchParams], action.searchParams', action.searchParams);
+    const updatedSearchParams = updateObject(state.searchParams, action.searchParams);
+    console.log('[setSearchParams], updatedSearchParams', updatedSearchParams);
     const updatedState = updateObject(state, { searchParams: updatedSearchParams});
+    console.log('[setSearchParams], updatedState', updatedState);
     return updatedState;
 };
 
@@ -61,7 +66,7 @@ const fetchPhotosFailed = (state, action) => {
 // Reducer
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.SET_SEARCH_FIELD: return setSearchField(state, action);
+        case actionTypes.SET_SEARCH_PARAMS: return setSearchParams(state, action);
         case actionTypes.FETCH_PHOTOS_START: return fetchPhotosStart(state, action);
         case actionTypes.FETCH_PHOTOS_SUCCESS: return fetchPhotosSuccess(state, action);
         case actionTypes.FETCH_PHOTOS_FAILED: return fetchPhotosFailed(state, action);
