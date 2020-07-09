@@ -10,7 +10,7 @@ const initialState = {
         orderBy: 'newest',
         page: 1,
         perPage: 30,
-        orientation: 'landscape'
+        orientation: 'portrait'
     },
     status: {
         loading: false,
@@ -74,13 +74,17 @@ const fetchPhotosSuccess = (state, action) => {
         loading: false,
         error: false,
         errorMessage: ''
+
     });
     // If searching page 1, then replace photos with new results, else if searching
-    // additional pages, add new results to the array of existing photos
+    // additional pages, add new results to the array of existing photos and only
+    // keep the most recent 60
+
+    const updatedPhotos = state.searchParams.page === 1 ?
+        action.photos :
+        state.photos.concat(action.photos).slice(state.photos.length - 30);
     const updatedState = updateObject(state, {
-        photos: state.searchParams.page === 1 ?
-            action.photos
-            : state.photos.concat(action.photos),
+        photos: updatedPhotos,
         status: updatedStatus
     });
     return updatedState;

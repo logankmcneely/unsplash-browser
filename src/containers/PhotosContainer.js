@@ -1,5 +1,11 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+
+// Material-UI
+import LinearProgress from '@material-ui/core/LinearProgress';
+
+// Local Imports
+import Aux from '../hoc/Auxillary';
 import Photos from '../components/Photos';
 import * as actions from '../store/actions';
 
@@ -101,7 +107,12 @@ const PhotosContainer = props => {
             data={photos} />
         : <p>Loading...</p>;
 
-    return photosDisplay;
+    return (
+        <Aux>
+            {photosDisplay}
+            {loading && searchParams.page > 1 ? <LinearProgress/> : null }
+        </Aux>
+    );
 };
 
 export default PhotosContainer;
