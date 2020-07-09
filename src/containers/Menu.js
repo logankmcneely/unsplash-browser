@@ -56,7 +56,8 @@ const Menu = (props) => {
     const menuSortedSearchHandler = (orderBy) => (e) => {
         onSetSearchParams({ 
             searchType: 'sorted',
-            orderBy: orderBy
+            orderBy: orderBy,
+            page: 1
         });
         setMenuOpen(false);
     }

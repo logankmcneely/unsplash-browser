@@ -12,9 +12,9 @@ import CloseIcon from '@material-ui/icons/Close';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-
-import Aux from '../hoc/Auxillary';
+// Local imports
 import * as actions from '../store/actions';
+import Aux from '../hoc/Auxillary';
 import Menu from './Menu';
 
 const useStyles = makeStyles((theme) => ({
@@ -76,6 +76,7 @@ const Search = () => {
                 if (newSearchField !== '') {
                     // console.log('[Search.js] newSearchField:', newSearchField);
                     onSetSearchParams({
+                        page: 1,
                         searchField: newSearchField,
                         searchType: 'search'});
                     setSearchFocusState(false);
