@@ -14,4 +14,10 @@ Hosted at https://mcneely-unsplash-browser.herokuapp.com/
   
 ##### Initialize
 
+Clone repository  
+Install dependencies:
+```
+npm install
+```  
+
 
