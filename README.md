@@ -25,7 +25,7 @@ Get a free API key from [Unsplash](https://unsplash.com/developers "Unsplash Dev
   
 In the root folder of the project create a file named **".env"**. [Learn more](https://create-react-app.dev/docs/adding-custom-environment-variables/ "Adding Custom Enviornment Variables in React")  
   
-In the newly created **.env** file add the line  
+In the newly created **.env** file add the following line replacing \<YOUR API KEY\> with your newly aquired key and save the file.
 ```
 REACT_APP_API_KEY=<YOUR API KEY>
 ``` 
