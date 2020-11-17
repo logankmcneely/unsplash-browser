@@ -12,12 +12,22 @@ Hosted at https://mcneely-unsplash-browser.herokuapp.com/
   * [Styling with Material UI](https://material-ui.com/ "Material UI's Homepage")  
   
   
-##### Initialize
+#### Set Up  
 
-Clone repository  
-Install dependencies:
-```
-npm install
-```  
+  * Clone repository 
+  
+  * Install dependencies:
+  * ``` npm install```  
+  
+  Get a free API key from [Unsplash](https://unsplash.com/developers "Unsplash Developer Page")  
+  
+  In the root folder of the project create a file named **".env"**. [Learn more](https://create-react-app.dev/docs/adding-custom-environment-variables/ "Adding Custom Enviornment Variables in React")  
+  
+  In the newly created **.env** file add the line  
+  ```
+  REACT_APP_API_KEY=<YOUR API KEY>
+  ``` 
+  where you paste your newly aquired API key.
+  
 
 
