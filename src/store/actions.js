@@ -48,11 +48,11 @@ export const fetchRandomPhotos = () => {
         unsplash.photos.getRandomPhoto({ count: 30 })
         .then(toJson)
         .then(response => {
-            console.log('[fetchRandomPhotos]', response);
+            // console.log('[fetchRandomPhotos]', response);
             dispatch(fetchPhotosSuccess(response));
         })
         .catch(error => {
-            console.log('[.get error]', error);
+            // console.log('[.get error]', error);
             // dispatch(fetchPhotosFailed(error));
         });
     };
@@ -69,19 +69,18 @@ export const fetchSearchedPhotos = (searchParams) => {
             { orientation: searchParams.orientation })
         .then(toJson)
         .then(response => {
-            console.log('[fetchSearchedPhotos]', response);
+            // console.log('[fetchSearchedPhotos]', response);
             dispatch(fetchPhotosSuccess(response.results));
             dispatch(setSearchTotalPages(response.total_pages));
         })
         .catch(error => {
-            console.log('[.get error]', error);
+            // console.log('[.get error]', error);
             // dispatch(fetchPhotosFailed(error));
         });
     };
 };
 
 export const fetchSortedPhotos = (searchParams) => {  
-    // console.log('[fetchSearchedPhotos] searchParams:', searchParams);
     return dispatch => {
         dispatch(fetchPhotosStart());
         unsplash.photos.listPhotos(
@@ -90,11 +89,12 @@ export const fetchSortedPhotos = (searchParams) => {
             searchParams.orderBy)
         .then(toJson)
         .then(response => {
-            console.log('[fetchSortedPhotos]', response);
-            dispatch(fetchPhotosSuccess(response));
+            // console.log('[fetchSortedPhotos]');
+            // Unsplash's API seems to have a tendency to return the same top image in sorted search results. This cuts that image out.
+            dispatch(fetchPhotosSuccess(response.slice(1)));
         })
         .catch(error => {
-            console.log('[.get error]', error);
+            // console.log('[.get error]', error);
             dispatch(fetchPhotosFailed(error));
         });
     };

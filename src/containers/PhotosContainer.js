@@ -79,7 +79,7 @@ const PhotosContainer = props => {
 
         const scrolled = winScroll / height;
         setScrollPosition(scrolled);
-        console.log('[listenToScroll] scrollPosition:', scrolled);
+        // console.log('[listenToScroll] scrollPosition:', scrolled);
     }, []);
 
 

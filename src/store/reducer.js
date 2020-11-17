@@ -26,7 +26,7 @@ const setSearchParams = (state, action) => {
     const updatedState = updateObject(state, {
         searchParams: updatedSearchParams
     });
-    console.log('[setSearchParams] updatedState', updatedState);
+    // console.log('[setSearchParams] updatedState', updatedState);
     return updatedState;
 };
 
@@ -37,7 +37,7 @@ const setSearchTotalPages = (state, action) => {
     const updatedState = updateObject(state, {
         status: updatedStatus
     });
-    console.log('[setSearchTotalPages] updatedState', updatedState);
+    // console.log('[setSearchTotalPages] updatedState', updatedState);
     return updatedState;
 }
 
@@ -52,7 +52,7 @@ const incrementSearchPage = (state, action) => {
         const updatedState = updateObject(state, {
             searchParams: updatedSearchParams
         });
-        console.log('[incrementSearchPage]', updatedState)
+        // console.log('[incrementSearchPage]', updatedState)
         return updatedState;
     } else {
         return state;

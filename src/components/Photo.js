@@ -33,6 +33,7 @@ const Photo = (props) => {
                         component="img"
                         image={props.data.urls.regular}
                         title={props.data.alt_description}
+                        onClick={() => (window.open(props.data.links.html, '_blank'))}
                     />
                 </CardActionArea>
             </Card>
