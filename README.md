@@ -3,6 +3,12 @@
 Hosted at https://mcneely-unsplash-browser.herokuapp.com/
 > Please be aware that the application may be in Heroku's sleep mode and initial loading of the page may take a moment.  
 
+#### Search Photos by Popular, Latest, Oldest, Random or Search by Name
+![Search Photos by Popular, Latest, or Random](/images/img1.png "Search Photos by Popular, Latest, or Random") ![Search by Name](/images/img2.png "Search Photos by Name")  
+
+#### Endless Scrolling
+![Endless Scrolling](/images/img3.png "Endless Scrolling")
+
 
 #### Built Using
 
